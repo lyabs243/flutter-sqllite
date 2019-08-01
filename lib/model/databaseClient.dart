@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'item.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -35,6 +35,12 @@ class DatabaseClient{
         name TEXT NOT NULL
       )
     ''');
+  }
+
+  Future<Item> addItem(Item item) async{
+    Database myDB = await database;
+    item.id = await myDB.insert('ítem', item.toMap());
+    return item;
   }
 
 }
