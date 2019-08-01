@@ -43,4 +43,17 @@ class DatabaseClient{
     return item;
   }
 
+  Future<List<Item>> allItems() async{
+    Database myDB = await database;
+    List<Map<String,dynamic>> result = await myDB.rawQuery('SELECT * FROM item');
+    List<Item> items = [];
+    result.forEach((m){
+      Item item = new Item();
+      item.id = m['id'];
+      item.name = m['name'];
+      items.add(item);
+    });
+    return items;
+  }
+
 }
