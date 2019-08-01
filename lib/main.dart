@@ -29,14 +29,65 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  String newList;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: <Widget>[
+          new FlatButton(
+              onPressed: (){
+                add();
+              },
+              child: new Text(
+                'ADD',
+              ),
+          ),
+        ],
       ),
       body: Center(
       ),
+    );
+  }
+
+  Future add() async{
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext buildContext){
+        return new AlertDialog(
+          title: new Text('Add wish list'),
+          content: new TextField(
+            decoration: new InputDecoration(
+              labelText: 'List:',
+              hintText: 'Ex: My favorites games',
+            ),
+            onChanged: (String str){
+              newList = str;
+            },
+          ),
+          actions: <Widget>[
+            new FlatButton(
+              onPressed: (){
+                Navigator.pop(buildContext);
+              },
+              child: new Text(
+                'Cancel'
+              ),
+            ),
+            new FlatButton(
+              onPressed: (){
+                Navigator.pop(buildContext);
+              },
+              child: new Text(
+                  'Save'
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
