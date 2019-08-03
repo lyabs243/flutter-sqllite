@@ -20,6 +20,7 @@ class Item{
     if(id != null){
       map['id'] = this.id;
     }
+    return map;
   }
 
 }
