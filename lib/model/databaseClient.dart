@@ -39,7 +39,7 @@ class DatabaseClient{
 
   Future<Item> addItem(Item item) async{
     Database myDB = await database;
-    item.id = await myDB.insert('ítem', item.toMap());
+    item.id = await myDB.rawInsert('INSERT INTO item(name) VALUES(?)', [item.name]);
     return item;
   }
 
