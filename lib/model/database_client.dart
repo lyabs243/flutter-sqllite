@@ -133,4 +133,20 @@ class DatabaseClient{
     return items;
   }
 
+  Future<List<Article>> allArticles(int item) async{
+    Database myDB = await database;
+    List<Map<String,dynamic>> result = await myDB.query('article',where: 'item = ?', whereArgs: [item]);
+    List<Article> articles = [];
+    result.forEach((m){
+      Article article = new Article();
+      article.id = m['id'];
+      article.name = m['name'];
+      article.item = m['item'];
+      article.price = m['price'];
+      article.shop = m['shop'];
+      articles.add(article);
+    });
+    return articles;
+  }
+
 }
