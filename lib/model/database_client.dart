@@ -80,6 +80,7 @@ class DatabaseClient{
 
   Future<int> deleteItem(int id,String table) async{
     Database myDB = await database;
+    myDB.delete('article',where: 'item = ?',whereArgs: [id]);
     return myDB.delete(table,where: 'id = ?',whereArgs: [id]);
   }
 
