@@ -28,6 +28,7 @@ class DatabaseClient{
   }
 
   Future _onCreate(Database db,int version) async{
+
     await db.execute(
     '''
       CREATE TABLE item(
@@ -35,6 +36,19 @@ class DatabaseClient{
         name TEXT NOT NULL
       )
     ''');
+
+    await db.execute(
+        '''
+      CREATE TABLE article(
+        id INTEGER PRIMARY KEY,
+        name TEXT NOT NULL,
+        item INTEGER,
+        price TEXT,
+        shop TEXT,
+        image TEXT
+      )
+    ''');
+
   }
 
   Future<Item> addItem(Item item) async{

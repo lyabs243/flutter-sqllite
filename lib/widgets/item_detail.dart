@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sql_lite/model/item.dart';
+import 'package:flutter_sql_lite/model/Article.dart';
+import 'empty_data.dart';
 
 class ItemDetail extends StatefulWidget{
 
@@ -19,13 +21,39 @@ class ItemDetail extends StatefulWidget{
 
 class _ItemDetail extends State<ItemDetail>{
 
+  List<Article> articles;
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return new Scaffold(
       appBar: new AppBar(
         title: Text(this.widget.item.name),
+        actions: <Widget>[
+          new FlatButton(
+            onPressed: (){
+
+            },
+            child: new Text('ADD'),
+          ),
+        ],
       ),
+      body: (articles == null || articles.length == 0)
+        ? new EmptyData()
+        : new GridView.builder(
+          itemCount: articles.length,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+          itemBuilder: (context, i){
+            Article article = articles[i];
+            return new Card(
+              child: new Column(
+                children: <Widget>[
+                  new Text(article.name),
+                ],
+              ),
+            );
+          }
+        )
     );
   }
 
