@@ -144,6 +144,7 @@ class DatabaseClient{
       article.item = m['item'];
       article.price = m['price'];
       article.shop = m['shop'];
+      article.image = m['image'];
       articles.add(article);
     });
     return articles;
