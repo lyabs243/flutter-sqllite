@@ -59,6 +59,14 @@ class _HomeControllerState extends State<HomeController> {
                       });
                     }
                   ),
+                  leading: new IconButton(
+                      icon: new Icon(Icons.edit),
+                      onPressed: (){
+                        add(update: true, item: item).then((dyn){
+                          getData();
+                        });
+                      }
+                  ),
                 );
               }
           )
@@ -66,17 +74,18 @@ class _HomeControllerState extends State<HomeController> {
     );
   }
 
-  Future add() async{
+  //add or update an item
+  Future add({update: false, item: null}) async{
     await showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext buildContext){
         return new AlertDialog(
-          title: new Text('Add wish list'),
+          title: new Text((update)? 'Update item' : 'Add wish list'),
           content: new TextField(
             decoration: new InputDecoration(
               labelText: 'List:',
-              hintText: 'Ex: My favorites games',
+              hintText: (!update)? 'Ex: My favorites games' : item.name,
             ),
             onChanged: (String str){
               newList = str;
@@ -94,10 +103,16 @@ class _HomeControllerState extends State<HomeController> {
             new FlatButton(
               onPressed: (){
                 if(newList != null) {
-                  Map<String, dynamic> map = {'name': newList};
-                  Item item = new Item();
-                  item.fromMap(map);
-                  DatabaseClient().addItem(item).then((i) => getData());
+                  if(!update) {
+                    Map<String, dynamic> map = {'name': newList};
+                    item = new Item();
+                    item.fromMap(map);
+                    DatabaseClient().addItem(item).then((i) => getData());
+                  }
+                  else{
+                    item.name = newList;
+                    DatabaseClient().updateItem(item);
+                  }
                   newList = null;
                 }
                 Navigator.pop(buildContext);
