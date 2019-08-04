@@ -29,11 +29,7 @@ class _ItemDetail extends State<ItemDetail>{
   void initState() {
     // TODO: implement initState
     super.initState();
-    DatabaseClient().allArticles(widget.item.id).then((list){
-      setState(() {
-        articles = list;
-      });
-    });
+    loadArticles();
   }
 
   @override
@@ -47,7 +43,9 @@ class _ItemDetail extends State<ItemDetail>{
             onPressed: (){
               Navigator.push(context, new MaterialPageRoute(builder: (BuildContext buildContext){
                 return new AddArticle(this.widget.item.id);
-              }));
+              })).then((value){
+                loadArticles();
+              });
             },
             child: new Text('ADD'),
           ),
@@ -70,6 +68,14 @@ class _ItemDetail extends State<ItemDetail>{
           }
         )
     );
+  }
+
+  void loadArticles(){
+    DatabaseClient().allArticles(widget.item.id).then((list){
+      setState(() {
+        articles = list;
+      });
+    });
   }
 
 }
