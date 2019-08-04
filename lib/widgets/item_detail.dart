@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sql_lite/model/item.dart';
 import 'package:flutter_sql_lite/model/Article.dart';
 import 'empty_data.dart';
+import 'add_article.dart';
 
 class ItemDetail extends StatefulWidget{
 
@@ -32,7 +33,9 @@ class _ItemDetail extends State<ItemDetail>{
         actions: <Widget>[
           new FlatButton(
             onPressed: (){
-
+              Navigator.push(context, new MaterialPageRoute(builder: (BuildContext buildContext){
+                return new AddArticle(this.widget.item.id);
+              }));
             },
             child: new Text('ADD'),
           ),
