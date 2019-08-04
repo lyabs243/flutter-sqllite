@@ -4,6 +4,7 @@ import 'package:flutter_sql_lite/model/article.dart';
 import 'empty_data.dart';
 import 'add_article.dart';
 import 'package:flutter_sql_lite/model/database_client.dart';
+import 'dart:io';
 
 class ItemDetail extends StatefulWidget{
 
@@ -62,6 +63,15 @@ class _ItemDetail extends State<ItemDetail>{
               child: new Column(
                 children: <Widget>[
                   new Text(article.name),
+                  (article.image == null)
+                  ? new Image.asset('assets/no_image.png')
+                  : new Image.file(new File(article.image)),
+                  (article.price == null)
+                      ? new Text('No price')
+                      : new Text('Price: ${article.price}'),
+                  (article.shop == null)
+                      ? new Text('No Shop')
+                      : new Text('Shop: ${article.shop}'),
                 ],
               ),
             );
