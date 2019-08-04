@@ -56,16 +56,21 @@ class _ItemDetail extends State<ItemDetail>{
         ? new EmptyData()
         : new GridView.builder(
           itemCount: articles.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1),
           itemBuilder: (context, i){
             Article article = articles[i];
             return new Card(
               child: new Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   new Text(article.name),
-                  (article.image == null)
-                  ? new Image.asset('assets/no_image.png')
-                  : new Image.file(new File(article.image)),
+                  new Container(
+                    width: MediaQuery.of(context).size.width / 1.5,
+                    height: MediaQuery.of(context).size.width / 1.5,
+                    child: (article.image == null)
+                        ? new Image.asset('assets/no_image.png',fit: BoxFit.cover,)
+                        : new Image.file(new File(article.image),fit: BoxFit.cover,),
+                  ),
                   (article.price == null)
                       ? new Text('No price')
                       : new Text('Price: ${article.price}'),
