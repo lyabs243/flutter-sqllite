@@ -111,7 +111,7 @@ class DatabaseClient{
   }
 
   Future<Article> upSertArticle(Article article) async{
-    if(article == null){
+    if(article.id == null){
       article = await addArticle(article);
     }
     else{
