@@ -20,6 +20,7 @@ class AddArticle extends StatefulWidget{
 class _AddArticleState extends State<AddArticle>{
 
   String image;
+  String name, price, shop;
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +67,9 @@ class _AddArticleState extends State<AddArticle>{
                       ),
                     ],
                   ),
+                  textField(TypeTextField.name, 'Article Name'),
+                  textField(TypeTextField.price, 'Price'),
+                  textField(TypeTextField.shop, 'Shop'),
                 ],
               ),
             ),
@@ -74,5 +78,28 @@ class _AddArticleState extends State<AddArticle>{
       ),
     );
   }
+
+  TextField textField(TypeTextField type,String label){
+    return new TextField(
+      decoration: new InputDecoration(
+        labelText: label,
+      ),
+      onChanged: (String txt){
+        switch(type){
+          case TypeTextField.name:
+            this.name = txt;
+            break;
+          case TypeTextField.price:
+            this.price = txt;
+            break;
+          case TypeTextField.shop:
+            this.shop = shop;
+            break;
+        }
+      },
+    );
+  }
   
 }
+
+enum TypeTextField{name, price, shop}
