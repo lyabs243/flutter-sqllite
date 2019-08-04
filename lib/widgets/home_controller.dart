@@ -51,6 +51,14 @@ class _HomeControllerState extends State<HomeController> {
                 Item item = items[i];
                 return new ListTile(
                   title: new Text(item.name),
+                  trailing: new IconButton(
+                    icon: new Icon(Icons.delete),
+                    onPressed: (){
+                      DatabaseClient().deleteItem(item.id, 'item').then((id){
+                        getData();
+                      });
+                    }
+                  ),
                 );
               }
           )

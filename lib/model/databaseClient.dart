@@ -43,6 +43,11 @@ class DatabaseClient{
     return item;
   }
 
+  Future<int> deleteItem(int id,String table) async{
+    Database myDB = await database;
+    return myDB.delete(table,where: 'id = ?',whereArgs: [id]);
+  }
+
   Future<List<Item>> allItems() async{
     Database myDB = await database;
     List<Map<String,dynamic>> result = await myDB.rawQuery('SELECT * FROM item');
