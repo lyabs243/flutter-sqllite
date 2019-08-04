@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sql_lite/model/item.dart';
-import 'package:flutter_sql_lite/model/Article.dart';
+import 'package:flutter_sql_lite/model/article.dart';
 import 'empty_data.dart';
 import 'add_article.dart';
 

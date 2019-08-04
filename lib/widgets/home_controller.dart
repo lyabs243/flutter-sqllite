@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter_sql_lite/model/item.dart';
 import 'package:flutter_sql_lite/widgets/empty_data.dart';
-import 'package:flutter_sql_lite/model/databaseClient.dart';
+import 'package:flutter_sql_lite/model/database_client.dart';
 import 'item_detail.dart';
 
 class HomeController extends StatefulWidget {

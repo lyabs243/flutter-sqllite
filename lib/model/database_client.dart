@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'item.dart';
+import 'article.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -20,11 +21,31 @@ class DatabaseClient{
     String database_directory = join(directory.path,'database.db');
     var bdd = await openDatabase(
         database_directory,
-        version: 1,
+        version: 2,
         onCreate: _onCreate,
+        onUpgrade: _onUpgrade,
     );
 
     return bdd;
+  }
+
+
+  Future _onUpgrade(Database db,int oldVersion,newVersion) async{
+
+    if(oldVersion < 2) {
+      await db.execute(
+          '''
+      CREATE TABLE article(
+        id INTEGER PRIMARY KEY,
+        name TEXT NOT NULL,
+        item INTEGER,
+        price TEXT,
+        shop TEXT,
+        image TEXT
+      )
+    ''');
+    }
+
   }
 
   Future _onCreate(Database db,int version) async{
@@ -75,6 +96,28 @@ class DatabaseClient{
       await updateItem(item);
     }
     return item;
+  }
+
+  Future<Article> addArticle(Article article) async{
+    Database myDB = await database;
+    article.id = await myDB.rawInsert('INSERT INTO article(name,item,price,shop,image) VALUES(?,?,?,?,?)',
+        [article.name,article.item,article.price,article.shop,article.image]);
+    return article;
+  }
+
+  Future<int> updateArticle(Article article) async{
+    Database myDB = await database;
+    return myDB.update('article', article.toMap(), where: 'id = ?', whereArgs: [article.id]);
+  }
+
+  Future<Article> upSertArticle(Article article) async{
+    if(article == null){
+      article = await addArticle(article);
+    }
+    else{
+      await updateArticle(article);
+    }
+    return article;
   }
 
   Future<List<Item>> allItems() async{

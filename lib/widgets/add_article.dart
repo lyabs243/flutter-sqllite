@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
+import 'package:flutter_sql_lite/model/article.dart';
+import 'package:flutter_sql_lite/model/database_client.dart';
 
 class AddArticle extends StatefulWidget{
   
@@ -31,7 +33,7 @@ class _AddArticleState extends State<AddArticle>{
         actions: <Widget>[
           new FlatButton(
             onPressed: (){
-
+              addArticle();
             },
             child: new Text('Validate')
           ),
@@ -98,6 +100,33 @@ class _AddArticleState extends State<AddArticle>{
         }
       },
     );
+  }
+
+  void addArticle(){
+    if(name != null){
+      Map<String,dynamic> map = {
+        'name': name,
+        'item': widget.id
+      };
+      if(price != null){
+        map['price'] = price;
+      }
+      if(shop != null){
+        map['shop'] = shop;
+      }
+      if(image != null){
+        map['image'] = image;
+      }
+      Article article = new Article();
+      article.fromMap(map);
+      DatabaseClient().upSertArticle(article).then((value){
+        name = null;
+        price = null;
+        shop = null;
+        image = null;
+        Navigator.pop(context);
+      });
+    }
   }
   
 }
