@@ -134,7 +134,9 @@ class _AddArticleState extends State<AddArticle>{
   Future getImage(ImageSource imageSource) async{
     var newImage = await ImagePicker.pickImage(source: imageSource);
     setState(() {
-      image = (newImage)?? newImage.path;
+      if(newImage != null){
+        image = newImage.path;
+      }
     });
   }
   
