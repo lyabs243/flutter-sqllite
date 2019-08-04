@@ -95,7 +95,7 @@ class _AddArticleState extends State<AddArticle>{
             this.price = txt;
             break;
           case TypeTextField.shop:
-            this.shop = shop;
+            this.shop = txt;
             break;
         }
       },
