@@ -3,6 +3,7 @@ import 'package:flutter_sql_lite/model/item.dart';
 import 'package:flutter_sql_lite/model/article.dart';
 import 'empty_data.dart';
 import 'add_article.dart';
+import 'package:flutter_sql_lite/model/database_client.dart';
 
 class ItemDetail extends StatefulWidget{
 
@@ -23,6 +24,17 @@ class ItemDetail extends StatefulWidget{
 class _ItemDetail extends State<ItemDetail>{
 
   List<Article> articles;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    DatabaseClient().allArticles(widget.item.id).then((list){
+      setState(() {
+        articles = list;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
