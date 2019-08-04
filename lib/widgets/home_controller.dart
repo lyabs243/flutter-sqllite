@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_sql_lite/model/item.dart';
 import 'package:flutter_sql_lite/widgets/empty_data.dart';
 import 'package:flutter_sql_lite/model/databaseClient.dart';
+import 'item_detail.dart';
 
 class HomeController extends StatefulWidget {
   HomeController({Key key, this.title}) : super(key: key);
@@ -67,6 +68,16 @@ class _HomeControllerState extends State<HomeController> {
                         });
                       }
                   ),
+                  onTap: (){
+                    Navigator.push(
+                        context,
+                        new MaterialPageRoute(
+                            builder: ((BuildContext buildContext){
+                              return new ItemDetail(item);
+                            }),
+                        ),
+                    );
+                  },
                 );
               }
           )
